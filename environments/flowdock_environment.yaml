@@ -490,7 +490,7 @@ dependencies:
       - numpy==1.26.4
       - oauthlib==3.2.2
       - omegaconf==2.3.0
-      - git+https://github.com/amorehead/openfold.git@fe1275099639bf7e617e09ef24d6af778647dd64
+      # - git+https://github.com/amorehead/openfold.git@fe1275099639bf7e617e09ef24d6af778647dd64
       - optuna==2.10.1
       - packmol-memgen==2025.1.29
       - pandas==2.2.3
@@ -518,7 +518,7 @@ dependencies:
       - python-dotenv==1.0.1
       - python-json-logger==3.3.0
       - pytorch-lightning==2.5.0.post0
-      - git+https://github.com/facebookresearch/pytorch3d.git@3da7703c5ac10039645966deddffe8db52eab8c5
+      # - git+https://github.com/facebookresearch/pytorch3d.git@3da7703c5ac10039645966deddffe8db52eab8c5
       - pytraj==2.0.6
       - requests-oauthlib==2.0.0
       - rich==13.9.4
