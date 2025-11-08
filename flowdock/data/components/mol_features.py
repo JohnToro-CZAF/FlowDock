@@ -589,6 +589,8 @@ def process_mol_file(
             mol.UpdatePropertyCache(strict=False)
     elif fname.endswith("mol2"):
         mol = Chem.MolFromMol2File(fname, sanitize=sanitize)
+    elif fname.endswith("mol"):
+        mol = Chem.MolFromMolFile(fname, sanitize=sanitize)
     elif fname.endswith("pdb"):
         mol = Chem.MolFromPDBFile(fname, sanitize=sanitize)
         if not sanitize:
@@ -604,6 +606,8 @@ def process_mol_file(
         return mol
     if tokenizer is not None:
         return smiles2inputs(tokenizer, Chem.rdmolfiles.MolToSmiles(mol))
+    
+    print("discard_coords: ", discard_coords)
     if discard_coords:
         conf_xyz = get_conformers_as_tensor(mol, 1)[0]
     else:

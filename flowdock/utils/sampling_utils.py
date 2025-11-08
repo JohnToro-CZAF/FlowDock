@@ -51,7 +51,7 @@ def featurize_protein_and_ligands(
     :param rec_path: Path to the receptor file.
     :param lig_paths: List of paths to the ligand files.
     :param n_lig_patches: Number of ligand patches.
-    :param apo_rec_path: Path to the apo receptor file.
+    :param apo_rec_path: Optional path to the apo receptor file.
     :param chain_id: Chain ID of the receptor.
     :param protein: Optional protein object.
     :param sequences_to_embeddings: Mapping of sequences to embeddings.
@@ -81,6 +81,8 @@ def featurize_protein_and_ligands(
             log.warning(
                 f"RDKit sanitization failed for ligand {lig_path} due to: {e}. Loading raw attributes."
             )
+            print("lig_path: ", lig_path)
+            print("discard_sdf_coords: ", discard_sdf_coords)
             lig_sample, mol_ref = process_mol_file(
                 lig_path,
                 sanitize=False,
