@@ -300,6 +300,10 @@ def multi_pose_sampling(
                 ligs_affinity_all.append(ligs_aff.tolist())
     if confidence and cfg.rank_outputs_by_confidence:
         plddt_lig_predicted = all(plddt_lig_all)
+        print("plddt_lig_predicted: ", plddt_lig_predicted)
+        print("plddt_all: ", np.array(plddt_all).shape)
+        print("plddt_lig_all: ", np.array(plddt_lig_all).shape)
+        print("plddt_all + plddt_lig_all: ", np.array(plddt_all + plddt_lig_all).shape)
         if cfg.plddt_ranking_type == "protein":
             struct_plddts = np.array(plddt_all)  # rank outputs using average protein plDDT
         elif cfg.plddt_ranking_type == "ligand":
@@ -379,17 +383,22 @@ def multi_pose_sampling(
                     ),
                 )
         if confidence:
-            aux_estimation_all_df = pd.DataFrame(
-                {
-                    "sample_id": [sample_id] * len(struct_res_all),
-                    "rank": struct_plddt_rankings + 1 if cfg.rank_outputs_by_confidence else None,
-                    "plddt_ligs": plddt_ligs_all,
-                    "affinity_ligs": ligs_affinity_all,
-                }
-            )
-            aux_estimation_all_df.to_csv(
-                os.path.join(out_path, f"{sample_id if sample_id is not None else 'sample'}_auxiliary_estimation.csv"), index=False
-            )
+            # print("len(struct_res_all): ", len(struct_res_all))
+            # print("struct_plddt_rankings: ", struct_plddt_rankings)
+            # print("plddt_ligs_all: ", plddt_ligs_all)
+            # print("ligs_affinity_all: ", ligs_affinity_all)
+            if cfg.plddt_ranking_type != "protein_ligand":
+                aux_estimation_all_df = pd.DataFrame(
+                    {
+                        "sample_id": [sample_id] * len(struct_res_all),
+                        "rank": struct_plddt_rankings + 1 if cfg.rank_outputs_by_confidence else None,
+                        "plddt_ligs": plddt_ligs_all,
+                        "affinity_ligs": ligs_affinity_all,
+                    }
+                )
+                aux_estimation_all_df.to_csv(
+                    os.path.join(out_path, f"{sample_id if sample_id is not None else 'sample'}_auxiliary_estimation.csv"), index=False
+                )
     else:
         ref_mol = None
     if not confidence:
